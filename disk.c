@@ -1,0 +1,409 @@
+#include<stdio.h>
+#include<stdlib.h>
+int *req,*vi,trn,chp,cchp,st,rn,i,j,d,pos=0,dir=1;
+void fcfs()
+{
+	pos=i=st=0;
+	cchp=chp;
+	while(i<rn)
+	{
+		pos=req[i]-cchp;
+		cchp=req[i];
+		if(pos<0)
+			pos*=-1;
+		st+=pos;
+		i++;
+	}
+}
+void sstf()
+{
+	int cp,pid;
+	i=0,st=0;
+	cchp=chp;
+	while(i<rn)
+	{
+		pid=-1;
+		cp=10000;
+		for(j=0;j<rn;j++)
+		{
+			if(vi[j]==1)
+				continue;
+			pos=req[j]-cchp;
+			if(pos<0)
+				pos*=-1;
+			if(cp>pos)
+			{
+				cp=pos;
+				pid=j;
+			}
+		}
+		vi[pid]=1;
+		pos=req[pid]-cchp;
+		cchp=req[pid];
+		if(pos<0)
+			pos*=-1;
+		st+=pos;
+		i++;
+	}
+}
+void scan(int dir)
+{
+	int cp,pid,max=0,min=10000;
+	j=st=pos=d=0;
+	cchp=chp;
+	for(i=0;i<rn;i++)
+	{
+		vi[i]=0;
+		if(max<req[i])
+			max=req[i];
+		else if(min>req[i])
+			min=req[i];
+	}
+	while(j<rn)
+	{
+		pid=-1;
+		if(dir%2==1)
+		{
+			cp=100000;
+			for(i=0;i<rn;i++)
+			{
+				if(vi[i]==1||req[i]<cchp)
+					continue;
+				pos=req[i]-cchp;
+				if(cp>pos)
+				{
+					cp=pos;
+					pid=i;
+				}
+			}
+			vi[pid]=1;
+			pos=req[pid]-cchp;
+			st+=pos;
+			cchp=req[pid];
+			for(i=0;i<rn;i++)
+				if(max==req[i]&&vi[i]==1&&dir!=3)
+				{
+					dir=4;
+					pid=i;
+				}
+			if(dir==4)
+			{
+				pos=(trn-1)-req[pid];
+				st+=pos;
+				cchp=trn-1;
+				j++;
+			}
+		}
+		if(dir%2==0)
+		{		
+			cp=100000;
+			for(i=0;i<rn;i++)
+			{
+				if(vi[i]==1||req[i]>cchp)
+					continue;
+				pos=cchp-req[i];
+				if(cp>pos)
+				{
+					cp=pos;
+					pid=i;
+				}
+			}
+			vi[pid]=1;
+			pos=cchp-req[pid];
+			st+=pos;
+			cchp=req[pid];
+			for(i=0;i<rn;i++)
+				if(min==req[i]&&vi[i]==1&&dir!=4)
+				{
+					dir=3;
+					pid=i;
+				}
+			if(dir==3)
+			{
+				pos=req[pid]-0;
+				st+=pos;
+				cchp=0;
+			}
+		}
+		j++;
+	}
+}
+void c_scan(int dir)
+{
+	int cp,pid,max=0,min=10000;
+	j=st=pos=d=0;
+	cchp=chp;
+	for(i=0;i<rn;i++)
+	{
+		vi[i]=0;
+		if(max<req[i])
+			max=req[i];
+		else if(min>req[i])
+			min=req[i];
+	}
+	while(j<rn)
+	{
+		pid=-1;
+		if(dir%2==1)
+		{
+			cp=100000;
+			for(i=0;i<rn;i++)
+			{
+				if(vi[i]==1||req[i]<cchp)
+					continue;
+				pos=req[i]-cchp;
+				if(cp>pos)
+				{
+					cp=pos;
+					pid=i;
+				}
+			}
+			vi[pid]=1;
+			pos=req[pid]-cchp;
+			st+=pos;
+			cchp=req[pid];
+			for(i=0;i<rn;i++)
+				if(max==req[i]&&vi[i]==1&&dir!=5)
+				{
+					dir=3;
+					pid=i;
+				}
+			if(dir==3)
+			{
+				dir=5;
+				pos=(trn-1)-req[pid];
+				st+=pos;
+				cchp=trn-1;
+				pos=cchp-0;
+				st+=pos;
+				cchp=0;
+			}
+		}
+		if(dir%2==0)
+		{		
+			cp=100000;
+			for(i=0;i<rn;i++)
+			{
+				if(vi[i]==1||req[i]>cchp)
+					continue;
+				pos=cchp-req[i];
+				if(cp>pos)
+				{
+					cp=pos;
+					pid=i;
+				}
+			}
+			vi[pid]=1;
+			pos=cchp-req[pid];
+			st+=pos;
+			cchp=req[pid];
+			for(i=0;i<rn;i++)
+				if(min==req[i]&&vi[i]==1&&dir!=6)
+				{
+					dir=4;
+					pid=i;
+				}
+			if(dir==4)
+			{
+				dir=6;
+				pos=req[pid]-0;
+				st+=pos;
+				cchp=0;
+				pos=(trn-1)-0;
+				st+=pos;
+				cchp=trn-1;
+			}
+		}
+		j++;
+	}
+		
+}
+void look(int dir)
+{
+	int cp,pid,max=0,min=10000;
+	j=st=pos=d=0;
+	cchp=chp;
+	for(i=0;i<rn;i++)
+	{
+		vi[i]=0;
+		if(max<req[i])
+			max=req[i];
+		else if(min>req[i])
+			min=req[i];
+	}
+	while(j<rn)
+	{
+		pid=-1;
+		if(dir%2==1)
+		{
+			cp=100000;
+			for(i=0;i<rn;i++)
+			{
+				if(vi[i]==1||req[i]<cchp)
+					continue;
+				pos=req[i]-cchp;
+				if(cp>pos)
+				{
+					cp=pos;
+					pid=i;
+				}
+			}
+			vi[pid]=1;
+			pos=req[pid]-cchp;
+			st+=pos;
+			cchp=req[pid];
+			for(i=0;i<rn;i++)
+				if(max==req[i]&&vi[i]==1&&dir!=3)
+					dir=4;
+			if(dir==4)
+				j++;
+		}
+		if(dir%2==0)
+		{		
+			cp=100000;
+			for(i=0;i<rn;i++)
+			{
+				if(vi[i]==1||req[i]>cchp)
+					continue;
+				pos=cchp-req[i];
+				if(cp>pos)
+				{
+					cp=pos;
+					pid=i;
+				}
+			}
+			vi[pid]=1;
+			pos=cchp-req[pid];
+			st+=pos;
+			cchp=req[pid];
+			for(i=0;i<rn;i++)
+				if(min==req[i]&&vi[i]==1&&dir!=4)
+					dir=3;
+		}
+		j++;
+	}
+}
+void c_look(int dir)
+{
+	int cp,pid,max=0,min=10000;
+	j=st=pos=d=0;
+	cchp=chp;
+	for(i=0;i<rn;i++)
+	{
+		vi[i]=0;
+		if(max<req[i])
+			max=req[i];
+		else if(min>req[i])
+			min=req[i];
+	}
+	while(j<rn)
+	{
+		pid=-1;
+		if(dir%2==1)
+		{
+			cp=100000;
+			for(i=0;i<rn;i++)
+			{
+				if(vi[i]==1||req[i]<cchp)
+					continue;
+				pos=req[i]-cchp;
+				if(cp>pos)
+				{
+					cp=pos;
+					pid=i;
+				}
+			}
+			vi[pid]=1;
+			pos=req[pid]-cchp;
+			st+=pos;
+			cchp=req[pid];
+			for(i=0;i<rn;i++)
+				if(max==req[i]&&vi[i]==1&&dir!=5)
+				{
+					dir=3;
+					pid=i;
+				}
+			if(dir==3)
+			{
+				dir=5;
+				pos=req[pid]-min;
+				st+=pos;
+				cchp=min;
+			}
+		}
+		if(dir%2==0)
+		{		
+			cp=100000;
+			for(i=0;i<rn;i++)
+			{
+				if(vi[i]==1||req[i]>cchp)
+					continue;
+				pos=cchp-req[i];
+				if(cp>pos)
+				{
+					cp=pos;
+					pid=i;
+				}
+			}
+			vi[pid]=1;
+			pos=cchp-req[pid];
+			st+=pos;
+			cchp=req[pid];
+			for(i=0;i<rn;i++)
+				if(min==req[i]&&vi[i]==1&&dir!=6)
+				{
+					dir=4;
+					pid=i;
+				}
+			if(dir==4)
+			{
+				dir=6;
+				pos=max-req[pid];
+				st+=pos;
+				cchp=max;
+			}
+		}
+		j++;
+	}
+}
+void display(int dis_flg)
+{
+	switch(dis_flg)
+	{
+		case 0: printf("\n\t\t\t\tFCFS\n"); break;
+		case 1: printf("\n\t\t\t\tSSTF\n"); break;
+		case 2: printf("\n\t\t\t\tSCAN\n"); break;
+		case 3: printf("\n\t\t\t\tC_SCAN\n"); break;
+		case 4: printf("\n\t\t\t\tLOOK\n"); break;
+		case 5: printf("\n\t\t\t\tC_LOOK\n"); break;
+	}	
+	printf("\n\tTotal Seek Time :- %dns\n",st);
+}
+int main()
+{
+	srand(1);//to set the rand() functions start point
+	printf("\n\tThe Number Of Tracks?\n-> ");
+	scanf("%d",&trn);
+	printf("\n\tThe Current Head Position?\n-> ");
+	scanf("%d",&chp);
+	printf("\n\tThe Number Of Requests?\n-> ");
+	scanf("%d",&rn);
+	req=(int *)malloc(4*rn);
+	vi=(int *)malloc(4*rn);
+	printf("\n\tEnter The Requests > \n");
+	for(i=0;i<rn;i++)
+		scanf("%d",&req[i]);
+	fcfs();
+	display(0);
+	sstf();
+	display(1);
+	scan(0);//(rand()%20 ));
+	display(2);
+	look(1);
+	display(4);
+	c_scan(1);
+	display(3);
+	c_look(1);
+	display(5);
+	return 0;
+}

@@ -1,0 +1,130 @@
+#include<stdio.h>
+int main()
+{
+  int at[20],cbt[20],bt[20],ct[20],tat[20],wt[20],x[20],y[20],z[20],st[20],vct,n,i,t,j,k,m,s,c1,l,key;
+  float atat=0,awt=0;
+  //printf("Enter the number of processes\n-> ");
+  scanf("%d",&n);
+  for(i=0;i<n;i++)
+  {
+   // printf("Enter the AT of process P%d\n",i+1);
+    scanf("%d",&at[i]);
+  }
+  for(i=0;i<n;i++)
+  {
+    //printf("Enter the BT of process P%d\n",i+1);
+    scanf("%d",&bt[i]);
+  }
+  for(i=0;i<n;i++)
+  {  
+	y[i]=at[i];
+	cbt[i]=bt[i];
+  }
+  for(i=0;i<n-1;i++)
+  {
+    for(j=i+1;j<n;j++)
+    {
+      if(y[i]>y[j])
+      {
+        t=y[i];
+        y[i]=y[j];
+        y[j]=t;
+      }  
+    }  
+  }
+  for(i=0;i<n;)
+  {  
+    for(j=0;j<n;j++)
+    {
+      if(y[i]==at[j])
+      {
+        x[i]=j;
+        i++;
+      }  
+    }
+  }  
+  s=y[0];    
+  for(j=0;j<n-1;j++)
+  {
+    for(i=j+1;i<n;i++)
+    {
+      if(at[x[j]]==at[x[i]])
+	  {	
+		  if(bt[x[j]]>bt[x[i]])
+          {
+        	t=x[j];
+        	x[j]=x[i];
+        	x[i]=t;
+      	  }  
+ 	  }   
+	}
+  }	
+  for(i=0;i<n;i++)
+  {
+	y[i]=0;
+	ct[i]=0;
+  }	
+  vct=at[x[0]];	
+  printf("\t%d",vct);
+  for(k=0;k<n;)//main logic loop
+  {
+    for(i=0;i<n;i++)
+      st[i]=-1;
+    c1=0;
+    i=0;
+    for(j=0;j<n;j++)
+    {
+      if((y[x[j]]==0)&&(at[x[j]]<=vct))
+      {
+        st[i]=x[j];
+        i++;
+        c1++;
+      }
+    } 
+    m=1000;
+    for(i=0;i<c1;i++)
+	{
+     	if(m>bt[st[i]])
+		{    
+       		m=bt[st[i]];
+			j=i;
+		}
+	}
+    i=0;
+	while(i<c1)
+	{
+    	if((y[st[i]]==0)&&(i==j))
+    	{
+			bt[st[i]]=bt[st[i]]-1;
+			printf("\tP%d-%d",st[i]+1,vct+1);
+			if(bt[st[i]]==0)
+			{
+       			z[k]=st[i];
+       			y[st[i]]=1;
+				vct++;
+				ct[st[i]]=vct;
+				k++;
+				i=c1-1;
+			}
+			else
+			{
+				vct++;
+			}	
+      	}i++;
+	} 
+  }
+  for(i=0;i<n;i++)
+  {
+    tat[i]=ct[i]-at[i];
+    atat=atat+(float)tat[i];
+    wt[i]=tat[i]-cbt[i];
+    awt=awt+(float)wt[i];
+  }
+  atat/=n;
+  awt/=n;
+  printf("\nProcess\tArrival Time\tBurst Time\tCompletion Time\tTurn Around Time\tWaiting Time\n");
+  for(i=0;i<n;i++)
+    printf("P%d\t%d\t\t%d\t\t%d\t\t%d\t\t\t%d\n",z[i]+1,at[z[i]],cbt[z[i]],ct[z[i]],tat[z[i]],wt[z[i]]);
+  printf("Average waiting time = %f\nAverage turn around time = %f\n",awt,atat);        
+  return 0;
+}
