@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+main()
+{
+        int i,j,size,element=1,next_element=1,optimal=0,change=0;
+        printf("Enter the size of the array\n");
+        scanf("%d",&size);
+        int op1[size],op2[size],op_arr[size];
+        //op1 = (int *)malloc(4*size);
+        //op2 = (int *)malloc(4*size);
+        //op_arr = (int *)malloc(4*size);
+        printf("Enter the elements in the array %d\n",size);
+        for(i=0;i<size;i++)
+        {
+            scanf("%d",&op_arr[i]);
+            op2[i]=1;
+        }
+        printf("Computing.");
+        for(i=0;i<size*2;i++)
+            printf(".");
+        i=0;
+        while(optimal!=1)
+        {  
+            if(change==1)
+            {
+                change=0;
+                for(j=0;j<size;j++)
+                {
+                    op2[j]=element;
+                    element=element;
+                }
+                i=0;
+            }
+            for(;i<size;)
+            {              
+                op1[i]=op_arr[i]-op2[i];
+                if(i==0)
+                {
+                    i++;
+                    next_element=element;
+                    continue;
+                }
+                if(op2[i-1]>=op2[i]&&op1[i-1]<=op1[i]&&op2[i]+op1[i]==op_arr[i])
+                {
+                    i++;
+                    next_element=element;
+                    break;
+                }               
+                op2[i]=next_element; 
+                next_element--;               
+            }
+            if(i==size)
+            {
+                if(op2[0]>=op1[size-2]&&op_arr[size-1]-op2[0]>=op1[size-2])
+                {
+                    op1[size-1]=op2[0];
+                    op2[size-1]=op_arr[size-1]-op1[size-1];
+                    if(op2[size-2]<op2[size-1])
+                    {
+                        change=1;
+                        element++;
+                        next_element=element;
+                        continue;
+                    }
+                }
+                if((op2[0]==op1[size-1])&&(op2[size-1]+op1[size-1]==op_arr[size-1]))
+                    optimal=1;
+                else
+                    change=1;
+                element++;
+                next_element=element;
+            }
+        }
+        for(i=0;i<size;i++)
+            printf("%3d",op1[i]);
+        for(i=0;i<size;i++)
+            printf("%3d",op2[i]);
+        printf("\n\n%3d\n",op2[0]);
+}
