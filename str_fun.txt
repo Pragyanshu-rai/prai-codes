@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdbool.h>
+#include<stdlib.h>
+#include<string.h>
+/*
+*
+* Pragyanshu Rai
+* CSE B-4
+* 221810304049
+*
+*/
+char str[20];
+int length(char* str)
+{
+    int index = 0;
+    while(str[index] != '\0')
+        index++;
+    return index;
+}
+bool is_struct(char* str)
+{
+    char st[] = "struct";
+    for(int index=0; index<6; index++)
+        if(st[index]!=str[index])
+            return false;
+    if(length(str)!=length(st))
+        return false;
+    return true;    
+}
+bool is_number(char ch)
+{
+    if(ch == '0' ||ch == '1' ||ch == '2' ||ch == '3' ||ch == '4' ||ch == '5' ||ch == '6' ||ch == '7' ||ch == '8' ||ch == '9')
+        return true;
+    return false;
+}
+bool is_special(char ch)
+{
+    if(ch == '?' ||ch == '~' ||ch == '!' ||ch == '@' ||ch == '#' ||ch == '$' ||ch == '%' ||ch == '^' ||ch == '&')
+        return true;
+    return false;
+}
+bool is_operator(char ch)
+{
+    if(ch == '+' ||ch == '*' ||ch == '-' ||ch == '/' ||ch == '%' ||ch == ';' ||ch == ':' ||ch == '"' ||ch == ',' ||ch == '.' ||ch == '/' ||ch == '<' ||ch == '>' ||ch == '(' ||ch == ')' ||ch == '[' ||ch == ']')
+        return true;
+    return false;
+}
+char* check()
+{
+    int index=0;
+    while(str[index] != '\0')
+        index++;
+    int length=index-1;
+    for(index =0; index<=length-2; index++)
+    {
+        if(is_number(str[0]))
+            return "invalid";
+        else if(is_special(str[index]))
+            return "invalid";
+        else if(is_operator(str[index]))
+            return "invalid";
+    }
+    if((str[length-1] == '[' && str[length] != ']')||(str[length-1] == '(' && str[length] != ')'))
+        return "invalid";
+    if(str[length-1] == '(' && str[length] == ')')
+        return "function";
+    if(str[length-1] == '[' && str[length] == ']')
+        return "array";
+    if(is_struct(str))
+        return "structure";
+    return "variable";
+}
+int main()
+{
+    printf("Enter The String : ");
+    scanf("%[^\n]s",str);
+    printf("\n %s \n",check());
+    return 0;
+}
