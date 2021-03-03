@@ -1,0 +1,12 @@
+cc = gcc
+
+cpp = g++
+
+graph: graphs.cpp 
+    $(cpp) graphs.cpp -g -o graphs
+
+ll: linkedlist.cpp 
+    $(cpp) linkedlist.cpp -g -o sll
+
+tree: tree.c 
+    $(cc) tree.c -g -o tree

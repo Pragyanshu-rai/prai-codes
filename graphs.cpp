@@ -1,0 +1,105 @@
+#include<iostream>
+using namespace std;
+/* graph data structure class */
+class Graph
+{
+    public:
+        /* for graph representation as edge = [v, u] */
+        int edges;
+        
+        int vertices;
+        
+        int **adj;
+        
+        /* method makes the graph object and returns it */
+        void make_adj()
+        {
+            /* creating a 2d matrix and assigning it to the adj matrix in the end */
+            int **x; 
+            
+            x = new int*[this->vertices];
+            
+            for(int index=0; index < this->vertices; index++)
+                x[index] = new int[this->vertices];
+            
+            /* initialize all the values of adj matrix to 0 */
+            for(int row=0; row < this->vertices; row++)
+                for(int col=0; col < this->vertices; col++)
+                    x[row][col] = 0;
+            
+            this->adj = x;
+        }
+};
+
+/* function makes the graph object and returns it */
+Graph* make_adj(int size, int edges)
+{
+    Graph* g = new Graph();
+            
+    g->adj = new int*[size];
+            
+    for(int index=0; index < size; index++)
+        g->adj[index] = new int[size];
+            
+    /* initialize all the values of adj matrix to 0 */
+    for(int row=0; row < size; row++)
+        for(int col=0; col < size; col++)
+            g->adj[row][col] = 0;
+    
+    g->edges = edges;    
+    
+    g->vertices = size;
+    /* return the Graph pointer object */
+    return g;
+}
+
+int main()
+{
+    
+    int u, v;
+    
+    Graph *g1 = new Graph(), *g2;
+    
+    printf("Enter the number of edges and vertices\n");
+    
+    scanf("%d %d", &g1->edges, &g1->vertices);
+        
+    g1->make_adj();
+
+    g2 = make_adj(g1->vertices, g1->edges);
+    
+    printf("Enter the two connecting vertices as u, v");
+    
+    for(int index=0; index < g1->edges; index++)
+    {
+        printf("\nfor edge %d > ",index);
+        
+        scanf("%d, %d", &u, &v);
+        
+        g2->adj[u][v] = g2->adj[v][u] = g1->adj[u][v] = g1->adj[v][u] = 1; 
+    }
+    
+    printf("\n");
+    
+    for(int row=0; row < g1->vertices; row++)
+    {
+        for(int col=0; col < g1->vertices; col++)
+        {
+            printf("%d ", g1->adj[row][col]);
+        }
+        printf("\n");
+    }
+    
+    printf("\n");
+    
+    for(int row=0; row < g1->vertices; row++)
+    {
+        for(int col=0; col < g1->vertices; col++)
+        {
+            printf("%d ", g1->adj[row][col]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
