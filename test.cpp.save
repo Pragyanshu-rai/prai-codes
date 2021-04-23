@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+namespace inti
+{
+	int i=0;
+}
+namespace floati
+{
+	float i=0;
+}
+int main()
+
+	int i=0;
+	float i=23;
+	cout << i<< endl;
+	return 0;
+}

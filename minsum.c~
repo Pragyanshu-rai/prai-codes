@@ -2,7 +2,6 @@
 #include<stdlib.h>
 int main(int x,char *ab[])
 {
-    int *p = (int *)malloc(4);
 	/*int t,i,j,k,n,b[50],a[50];
 	t=atoi(ab[1]);
 	for(i=0;i<t;i++)

@@ -1,0 +1,19 @@
+#include<stdio.h>
+int main()
+{
+    int size;
+    scanf("%d", &size);
+    int array[size];
+    for(int index=0; index<size; index++)
+    {
+        scanf("%d", &array[index]);    
+    }
+    int median=size/2;
+    float res;
+    res=((float)array[median-1]+(float)array[median])/2;
+    if(size%2==1)
+        printf("%.1f\n", (float)array[median]);
+    else
+        printf("%.1f\n", res);
+    return 0;
+}

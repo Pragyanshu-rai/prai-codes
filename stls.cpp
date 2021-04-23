@@ -1,0 +1,59 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<unordered_map>
+#include<map>
+#include<set>
+
+using namespace std;
+
+int main()
+{
+    string alpha = "abcdefghijklmnopqrstuvwxyz";    
+    
+    vector<int> myvec={1, 2, 3, 4, 5, 6, 7};
+    
+    ;// no error
+    
+    cout << "Size - " <<*lower_bound(myvec.begin(), myvec.end(), 4)<< endl;
+    
+    cout << myvec[1] << endl << "All elements in the vector\n";
+    
+    myvec.insert(myvec.end(), 8);
+    
+    for(int x : myvec)
+        cout << x << " ";
+    
+    cout << endl;
+    
+    set< pair<int, int> > ms;
+    
+    ms.insert({10, 23});
+    ms.insert({10, 23});// no duplicates
+    ms.insert({11, 23});
+    ms.insert({12, 24});
+    ms.insert({13, 55});
+    
+    auto it = ms.begin();
+        
+    pair<int, int> p = *it;
+    
+    cout << p.first << endl<<"Set elements\n";
+    
+    for(pair<int, int> p: ms)
+        cout << p.first <<", "<<p.second<<" ";
+    
+    cout << endl;
+    
+    map<char, int> alpha_key;
+        
+    int count = 1;
+    
+    for(char letter : alpha)
+    {
+        alpha_key[letter] = count;
+        count++;
+    }
+    
+    return 0;
+}

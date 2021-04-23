@@ -1,0 +1,13 @@
+#include<iostream>
+using namespace std;
+long long int steps(long long int destination)
+{
+    
+}
+int main()
+{
+    long long int destination;
+    cin >> destination;
+    cout << steps(destination) << endl;
+    return 0;
+}
