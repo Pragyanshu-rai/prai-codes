@@ -1,0 +1,187 @@
+#include<iostream>
+//#include<stdlib.h>//for exit() function
+using namespace std;
+namespace link
+{  
+    int p,i=0;
+    struct node
+    {
+      int data;
+      struct node *next;
+      // structure constructor
+      node() : data(0), next(nullptr){}
+      node(int val) : data(val), next(nullptr){} 
+    };
+    typedef struct node Node;
+    Node *nn=NULL,*start=NULL,*t=NULL,*t1=NULL;
+    void iab()
+    {
+      nn=new(struct node);//nn=(struct node*)"<- type casting "malloc(sizeof(struct node));//for c
+      cout<<"Enter the data"<<endl;
+      cin>>nn->data;
+      if(!start)
+        start=nn;
+      else
+       {
+        nn->next=start;
+        start=nn;
+       }       
+    } 
+    void iap()
+    {      
+      cout<<"Enter the position"<<endl;
+      cin>>p;
+      nn=new(Node);
+      cout<<"Enter the data"<<endl;
+      cin>>nn->data;
+      if(!start)
+        start=nn;
+      else if(p==1)
+       {
+        nn->next=start;
+        start=nn;
+       }
+      else
+       {
+        t=start;
+        for(i=0;i<(p-2);i++)
+           t=t->next;
+        nn->next=t->next;
+        t->next=nn;
+       }  
+    }
+    void iae()
+    {
+      nn=new(struct node);
+      cout<<"Enter the data"<<endl;
+      cin>>nn->data;
+      if(!start)
+        start=nn;
+      else
+       {
+        t=start;
+        while(t->next!=NULL)
+           t=t->next;
+        t->next=nn;
+        nn->next=NULL;
+       }
+    }
+    void dab()
+    {
+      if(!start)
+        cout<<"No data to delete"<<endl;
+      else
+       {
+        t=start;
+        start=start->next;
+        cout<<"The data is deleted"<<endl;
+        delete(t);
+       }
+    } 
+    void dap()
+    {
+      if(!start)
+        cout<<"No data to delete"<<endl;
+      else
+      {cout<<"Enter the position"<<endl;
+      cin>>p;
+      if(p==1)
+       {
+        t=start;
+        start=start->next;
+        cout<<"The data is deleted"<<endl;
+        delete(t);
+       }
+      else
+       {
+        t=start;
+        for(i=0;i<(p-2);i++)
+           t=t->next;
+        t1=t->next;
+        t->next=t1->next;
+        cout<<"The data is deleted"<<endl;
+        delete(t1);}   
+       }
+    }
+    void dae()
+    { 
+       if(!start)
+        cout<<"No data to delete"<<endl;
+       else
+        {
+         t=start;
+         while(t->next!=NULL)
+           { t1=t;
+            t=t->next;}  
+         cout<<"The data is deleted"<<endl;
+         delete(t);
+         t1->next=NULL;
+        }      
+    } 
+    void dis()
+    {
+     if(!start)
+        cout<<"No data to display"<<endl;
+       else
+        {
+         t=start;
+         while(t)
+           {
+            cout<<t->data<<endl;
+            t=t->next;
+           }
+        }               
+    }
+    int count()
+    {
+        int size=0;
+        Node *temp=start;
+        while(temp != NULL)
+        {
+            size++;
+            temp = temp->next;
+        }
+        cout << "size of the linked list is- " << size << endl; 
+        return size;     
+    }
+    Node* add(Node* l1, Node* l2) {
+        int carry=0;
+        Node *head=NULL, *temp=NULL;
+        while(l1!=NULL or l2!=NULL or carry!=0)
+        {
+            int sum=0;
+            if(l2!=NULL)
+            {
+                sum += l2->val;
+                l2 = l2->next;
+            }
+            if(l1!=NULL)
+            {
+                sum += l1->val;
+                l1 = l1->next;
+            }
+            sum += carry;
+            carry = sum/10;
+            if(sum >= 10)
+            {
+                cout << sum <<" "<<carry<<endl;
+                sum %= 10;
+            }
+            cout << sum << " " << carry <<endl;
+            Node *nn = new Node(sum);
+            if(head == NULL)
+            {
+                head = nn;
+                head->next = NULL;
+                temp=start;
+            }
+            else
+            {
+                temp->next = nn;
+                temp=temp->next;
+            }
+        }
+        return head;
+    }
+}
+
